@@ -33,7 +33,7 @@ It is important to understand how our models work, in particular for:
 - debugging our training code / algorithm
 - getting ideas on how to improve the model
 - be compliant with regulations if our model is used in production
-- transfer learning makes all this very important
+- using pre-trained models for a new task (transfer learning)
 
 ---
 
@@ -120,7 +120,7 @@ Mahendran et al. [1] assess how much information \\(h_i\\) contains by trying to
 
 $$ \max\_{z} \Phi\_i(z) \cdot h\_i $$
 
-Start from a random z and update it to minimize the cost function above.
+Start from a random z and update it to maximize the cost function above.
 
 .citation[[1] Understanding Deep Image Representations by Inverting Them, Mahendran et al.]
 
@@ -168,7 +168,17 @@ Now instead of using the activations provided by the neural network, we want to 
 Either find the image that maximizes the given neuron:
 $$ \max\_{x~\text{img}} \Phi\_i(x) \cdot h\_{\text{target}} $$
 Or, given an image, find the direction that maximizes the given neuron:
-$$ \min\_{z\in\mathbb{R}^d} \Phi\_i(x + z) \cdot h\_{\text{target}} $$
+$$ \max\_{z\in\mathbb{R}^d} \Phi\_i(x + z) \cdot h\_{\text{target}} $$
+
+---
+
+# Playing with the input to understand activations
+
+The difference with "Inverting deep image representation"
+$$ \max\_{z} \Phi\_i(z) \cdot h\_i $$
+
+is that we stay close to the image \\(x\\) and maximize a target which is "1" on the neuron we want and "0" and the other neurons \\(h\_{\text{target}}\\), as opposed to \\(h\_i\\) which was an observed activation map.
+$$ \max\_{\color{red} z\in\mathbb{R}^d} \Phi\_i(x + z) \cdot \color{red}{h\_{\text{target}}} $$
 
 ---
 
