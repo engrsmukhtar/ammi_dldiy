@@ -54,14 +54,14 @@ It is important to understand how our models work, in particular for:
 
 .center[![](figs/formalism.svg)]
 
-\\( h\_i \\) is the tensor of the activations at hidden layer i.
-It is a 3-D tensor (width, height and number of channels) for convolutional layers,
+With \\( \sigma \\) the ReLU non linearity, \\( W_i \\) the weights,  and \\( h\_i \\) the tensor of the activations at hidden layer i.
+\\( h_i \\) is a 3-D tensor (width, height and number of channels) for convolutional layers,
 and a 1-D tensor for fully connected layers.
 <br />
 We are interested in knowing what \\( h\_i \\) contains.
 For this, there are mainly two types of methods:
 - direct analysis of \\( h\_i \\) for various images
-- modify the content of the image to maximize some activation of \\( h\_i \\)
+- modify the input to maximize some activation of \\( h\_i \\)
 
 ---
 class: outline
@@ -427,6 +427,23 @@ but keep a scientific mind:
 - if I change X, does it change my visualizations ?
 
 ---
+class: outline
+
+# Outline
+
+<ol>
+<li>Motivation</li>
+<li>Looking at network activations</li>
+<li>Maximizing responses from images</li>
+<li>Maximizing responses from noise</li>
+<li>Minimizing responses from images: adversarial examples</li>
+<li>Localizing content</li>
+<li class="outline_current">Understanding influence</li>
+<li>Summary</li>
+<li>Going further</li>
+</ol>
+
+---
 
 # Understanding influence
 
@@ -523,12 +540,40 @@ class: outline
 - visualizing word embeddings using t-sne.
 - probe linguistic properties of sentence embeddings [1]
 - gender bias in word embeddings [2]
+- visualization of the gates and activations [3]
 
 .citation[[1]What you can cram into a single $&!#* vector, Conneau et al.
 <br />
-[2] [Post from MIT Tech Review](https://www.technologyreview.com/s/602025/how-vector-space-mathematics-reveals-the-hidden-sexism-in-language/)]
+[2] [Post from MIT Tech Review](https://www.technologyreview.com/s/602025/how-vector-space-mathematics-reveals-the-hidden-sexism-in-language/)
+<br/>
+[3] Visualizing and understanding recurrent networks , Karpathy & Johnson]
+
 
 ---
+
+# Style transfer
+
+It is known in computer vision that the covariance of "textures" represents well the "style" of an image.
+
+
+
+  <img src="figs/style_transfer.png" style="vertical-align:center;width:60%;height: 100%;"/>
+
+
+.citation[A Neural Algorithm of Artistic Style, Gatys et al.]
+
+---
+
+# Style transfer
+
+If \\( h_i \\) is the tensor of activations at layer i, the covariance of the channels is defined by:
+
+$$ C\_{a, b} = \sum\_{x,y \in \[1,W\]\times\[1,h\]} {h_i}^{(a, x, y)} {h_i}^{(b, x, y)}$$
+
+We can apply the same techniques we saw before to transfer the style of an image to another image: we forward an image, compute its covariance matrix, compute the \\( \ell_2 \\) difference with our target style \\(C\\), and backpropagate to the image.
+
+---
+
 
 # More references
 
