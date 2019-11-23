@@ -1,2 +1,4 @@
 figs/*.pdf
 
+lib/
+.DS_Store
